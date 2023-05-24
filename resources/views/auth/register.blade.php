@@ -172,6 +172,11 @@
 
                     <input type="text" name="dob" id="datepicker" class="form-control mb-2" placeholder="Date Of Birth" required/>
 
+
+                    <input type="text" name="age" maxlength="2" class="form-control mb-2" placeholder="Age" required/>
+
+
+
                     <input type="file" name="image" class="form-control mb-2" placeholder="Image" required/>
 
                     <select name="gender" class="form-control mb-2" required >
