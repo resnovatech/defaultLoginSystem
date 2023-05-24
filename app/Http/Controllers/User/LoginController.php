@@ -44,8 +44,6 @@ class LoginController extends Controller
                 $newUser = User::create([
                     'name' => $user->name,
                     'email' => $user->email,
-                    'username' => 'main',
-                    'phone' => '12233',
                     'image' => $user->getAvatar(),
                     'social_id'=> $user->id,
                     'social_type'=> 'facebook',
@@ -81,8 +79,6 @@ class LoginController extends Controller
                 $newUser = User::create([
                     'name' => $user->name,
                     'email' => $user->email,
-                    'username' => 'main',
-                    'phone' => '11',
                     'image' => $user->getAvatar(),
                     'social_id'=> $user->id,
                     'social_type'=> 'google',
@@ -100,8 +96,33 @@ class LoginController extends Controller
     }
 
 
-    public function userDashboard(){
+    public function store(Request $request){
 
-        return view('user.dashboard');
+        $findEmail = User::where('email', $request->logindata)->first();
+        $findPhone = User::where('phone', $request->logindata)->first();
+        $findUserName = User::where('username', $request->logindata)->first();
+
+        if($findEmail){
+
+            Auth::login($findEmail);
+
+            return redirect('/home');
+
+        }elseif($findPhone){
+
+            Auth::login($findPhone);
+
+            return redirect('/home');
+
+        }elseif($findUserName){
+
+            Auth::login($findUserName);
+
+            return redirect('/home');
+
+        }else{
+            return redirect()->route('login')->with('error','Invalid Login Access');
+
+        }
     }
 }

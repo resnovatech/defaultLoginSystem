@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login</title>
+    <title>Forget Password</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://parsleyjs.org/src/parsley.css">
@@ -132,30 +132,19 @@
 
         <div class="card">
             <div class="p-3 border-bottom d-flex align-items-center justify-content-center">
-                <h5>Login </h5><br>
+                <h5>Forget Password</h5><br>
                 <h6>@include('flash_message')</h6>
             </div>
             <div class="p-3 px-4 py-4 border-bottom">
-                <form method="post" action="{{ route('userLogin.store') }}" enctype="multipart/form-data" id="form" data-parsley-validate="">
+                <form method="post" action="{{ route('sendEmail') }}" enctype="multipart/form-data" id="form" data-parsley-validate="">
                     @csrf
-                    <input type="text" name="logindata" class="form-control mb-2" placeholder="Email/Username/Phone" required/>
-                    <div class="form">
-                        <input type="password" id="upassword" name="password" class="form-control" placeholder="Password" required/>
-                    </div>
-                    <input type="checkbox" id="show-password">
-  <label for="show-password">Show Password</label>
+                    <input type="text" id="searchData" name="dataCheck" class="form-control mb-2" placeholder="Email/Phone" required/>
+                    <small id="dataCheck"></small>
 
-                    <button type="submit" class="btn btn-danger btn-block continue">Continue</button>
+                    <button type="submit" id="final_button" class="btn btn-danger btn-block continue">Send Mail</button>
                 </form>
-                <a href="{{ url('forgetPassword') }}">Forgot Password?</a>
-                    <div class="d-flex justify-content-center align-items-center mt-3 mb-3">
-                        <span class="line"></span> <small class="px-2 line-text">OR</small>
-                        <span class="line"></span> </div>
-                        <button onclick="location.href='{{ url('auth/facebook') }}'" class="btn btn-danger btn-block continue facebook-button d-flex justify-content-start align-items-center"> <i class="fa fa-facebook ml-2"></i> <span class="ml-5 px-4">Continue with facebook</span> </button>
-                        <button onclick="location.href='{{ url('auth/google') }}'" class="btn btn-danger btn-block continue google-button d-flex justify-content-start align-items-center"> <i class="fa fa-google ml-2"></i> <span class="ml-5 px-4">Continue with Google</span> </button>
-                    </div>
 
-                    <div class="p-3 d-flex flex-row justify-content-center align-items-center member"> <span>Not a member? </span> <a href="{{ route('register') }}" class="text-decoration-none ml-2">SIGNUP</a>
+
                     </div>
                 </div>
 
@@ -167,9 +156,47 @@
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
     <script>
            $(document).ready(function() {
+
         $("#show-password").change(function(){
             $(this).prop("checked") ?  $("#upassword").prop("type", "text") : $("#upassword").prop("type", "password");
         });
+
+
+        //checkMail
+
+
+        $("#searchData").keyup(function(){
+
+var email = $(this).val();
+//alert(email);
+
+ $.ajax({
+url: "{{ route('checkEmailFromList') }}",
+method: 'GET',
+data: {email:email},
+success: function(data) {
+
+    //alert(data);
+
+    if(data >= 1){
+
+        $("#final_button").show();
+        $('#dataCheck').html('Email Available');
+        $("#dataCheck").css({"color": "green"});
+
+    }else{
+
+
+
+        $("#final_button").hide();
+       $('#dataCheck').html('Email Not Available');
+        $("#dataCheck").css({"color": "red"});
+    }
+
+}
+});
+
+});
     });
 
         </script>

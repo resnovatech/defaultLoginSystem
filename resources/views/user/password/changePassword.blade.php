@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Register</title>
+    <title>Change Password</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link rel="stylesheet" href="https://parsleyjs.org/src/parsley.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -155,45 +155,24 @@
 
         <div class="card">
             <div class="p-3 border-bottom d-flex align-items-center justify-content-center">
-                <h5>Register</h5><br>
+                <h5>Change Password</h5><br>
                 <h6>@include('flash_message')</h6>
             </div>
             <div class="p-3 px-4 py-4 border-bottom">
-                <form method="post" action="{{ route('userRegistration.store') }}" enctype="multipart/form-data" id="form" data-parsley-validate="">
+                <form method="post" action="{{ route('postChangePassword') }}" enctype="multipart/form-data" id="form" data-parsley-validate="">
                     @csrf
-                    <input type="text" name="name" maxlength="255" class="form-control mb-2" placeholder="Name" required/>
 
-                    <input type="text" name="username" maxlength="255" class="form-control mb-2" placeholder="Username" required/>
-
-                    <input type="number" name="phone" data-parsley-length="[11, 11]" data-parsley-trigger="keyup" class="form-control mb-2" placeholder="Phone" required/>
-
-
-                    <input type="email" name="email" maxlength="255" class="form-control mb-2" placeholder="Email" required/>
-
-                    <input type="text" name="dob" id="datepicker" class="form-control mb-2" placeholder="Date Of Birth" required/>
-
-                    <input type="file" name="image" class="form-control mb-2" placeholder="Image" required/>
-
-                    <select name="gender" class="form-control mb-2" required >
-                        <option value="">-- Select Gender --</option>
-                        <option value="male">Male</option>
-                        <option value="Female">Female</option>
-                    </select>
-
+                    <input name="phone"  type="hidden" value="{{ $phone }}" class="form-control input-lg" placeholder="Enter Password" />
+                    
                     <div class="form">
                         <input name="password" id="passwd" type="password" class="form-control input-lg" placeholder="Enter Password" required data-parsley-length="[6, 10]" data-parsley-trigger="keyup"/>
 
-                        <input input name="password" id="confirm-passwd" type="password" class="form-control input-lg mt-2" placeholder="Retype Password" required data-parsley-equalto="#passwd" data-parsley-trigger="keyup"/>
+                        <input input name="password" id="confirm-passwd" type="password" class="form-control input-lg mt-3" placeholder="Retype Password" required data-parsley-equalto="#passwd" data-parsley-trigger="keyup"/>
                     </div>
-                    <button type="submit" class="btn btn-danger btn-block continue">Continue</button>
+                    <button type="submit" class="btn btn-danger btn-block continue">Confirm</button>
                 </form>
-                    <div class="d-flex justify-content-center align-items-center mt-3 mb-3">
-                        <span class="line"></span> <small class="px-2 line-text">OR</small>
-                        <span class="line"></span> </div>
-                        <button onclick="location.href='{{ url('auth/facebook') }}'" class="btn btn-danger btn-block continue facebook-button d-flex justify-content-start align-items-center"> <i class="fa fa-facebook ml-2"></i> <span class="ml-5 px-4">Continue with facebook</span> </button>
-                        <button onclick="location.href='{{ url('auth/google') }}'" class="btn btn-danger btn-block continue google-button d-flex justify-content-start align-items-center"> <i class="fa fa-google ml-2"></i> <span class="ml-5 px-4">Continue with Google</span> </button>
-                    </div>
-                    <div class="p-3 d-flex flex-row justify-content-center align-items-center member"> <span>Already a member? </span> <a href="{{ route('login') }}" class="text-decoration-none ml-2">SIGNIN</a>
+
+
                     </div>
                 </div>
 
